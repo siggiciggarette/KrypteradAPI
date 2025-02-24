@@ -6,6 +6,7 @@ app.MapGet("/", () => "Välkommen till KrypteradAPI!");
 // Encrypt Endpoint
 app.MapPost("/encrypt", (EncryptionRequest request) => 
 {
+    const int shift = 8;
     string encrypted = Encrypt(request.Text, request.Shift);
     return Results.Ok(new { EncryptedText = encrypted });
 });
@@ -13,6 +14,7 @@ app.MapPost("/encrypt", (EncryptionRequest request) =>
 // Decrypt Endpoint
 app.MapPost("/decrypt", (EncryptionRequest request) =>
 {
+    const int shift = 8;
     string decrypted = Encrypt(request.Text, -request.Shift); // Reuse the Encrypt function for decryption
     return Results.Ok(new { DecryptedText = decrypted });
 });
