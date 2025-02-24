@@ -36,6 +36,6 @@ jobs:
             application_name: KrypteradAPI
             environment_name: KrypteradAPI-env
             version_label: ${{ github.run_id }}
-            region: eu-north-1
+            region: eu-north-1b
             deployment_package: site.zip
            
