@@ -4,7 +4,7 @@ var app = builder.Build();
 app.MapGet("/", () => "Välkommen till KrypteradAPI!");
 
 // Encrypt Endpoint
-app.MapPost("/encrypt", (EncryptionRequest request) => 
+app.MapGet("/encrypt", (EncryptionRequest request) => 
 {
     const int shift = 8; // Fixed shift value
     string encrypted = Encrypt(request.Text, shift);
@@ -12,7 +12,7 @@ app.MapPost("/encrypt", (EncryptionRequest request) =>
 });
 
 // Decrypt Endpoint
-app.MapPost("/decrypt", (EncryptionRequest request) =>
+app.MapGet("/decrypt", (EncryptionRequest request) =>
 {
     const int shift = 8; // Fixed shift value
     string decrypted = Encrypt(request.Text, -shift); // Use negative shift for decryption
