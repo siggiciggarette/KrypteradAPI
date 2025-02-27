@@ -20,7 +20,7 @@ public class Encryption
             }
             else
             {
-                result.Append(letter); // Behåll specialtecken oförändrade
+                result.Append(letter); 
             }
         }
 
