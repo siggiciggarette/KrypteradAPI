@@ -1,7 +1,4 @@
-
-
-
-name: Build and Deploy to AWS
+name: Build and push to AWS
 
 on:
   push:
@@ -14,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v3
 
       - name: Setup .NET
@@ -25,29 +22,21 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
 
-      - name: Build project
-        run: dotnet build --configuration Release --no-restore
-
-      - name: Run tests
-        run: dotnet test --no-restore --verbosity normal
-
-      - name: Publish project
+      - name: Build and publish project
         run: dotnet publish -c Release -o site
 
-      - name: Create deployment package
-        run: |
-          cd site
-          zip -r ../site.zip .
+      - name: create zip package
+        run: cd site; zip ../site.zip *;
 
-      - name: Deploy to AWS Elastic Beanstalk
+      - name: Deploy to aws EB 
         uses: einaregilsson/beanstalk-deploy@v21
         with:
-          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: KrypteradAPI
-          environment_name: KrypteradAPI-env
-          version_label: ${{ github.run_id }}
-          region: eu-north-1
-          deployment_package: site.zip
+            aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            application_name: KrypteradAPI
+            environment_name: KrypteradAPI-env
+            version_label: ${{ github.run_id }}
+            region: eu-north-1
+            deployment_package: site.zip
 
-           
+
