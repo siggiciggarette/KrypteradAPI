@@ -24,7 +24,7 @@ jobs:
         run: dotnet restore
 
       - name: Build and publish project
-        run: dotnet publish -c Release -o site
+        run: dotnet publish ./KrypteradAPI/KrypteradAPI.csproj --configuration Release --output ./publ
 
       - name: create zip package
         run: cd site; zip ../site.zip *;
