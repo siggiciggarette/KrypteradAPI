@@ -39,4 +39,17 @@ jobs:
             region: eu-north-1
             deployment_package: site.zip
 
+      - name: Wait for environment to become ready
+        run: |
+              for i in {1..10}; do
+                STATUS=$(aws elasticbeanstalk describe-environments --environment-names KrypteradAPI-env --query 'Environments[0].Health' --output text)
+                if [ "$STATUS" == "Green" ]; then
+                  echo "Environment is ready"
+                  exit 0
+                fi
+                echo "Waiting for environment to become ready..."
+                sleep 30
+              done
+              echo "Deployment failed: Environment did not become ready in time"
+              exit 1
 
